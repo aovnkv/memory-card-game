@@ -10,15 +10,34 @@ const c5 = "<i class='fa fa-bicycle'></i>";
 const c6 = "<i class='fa fa-bomb'></i>";
 const c7 = "<i class='fa fa-leaf'></i>";
 const c8 = "<i class='fa fa-cube'></i>";
-
 let cardholder = [];
-let i = 1;
-while (i < 3) {
-	cardholder.push(c1, c2, c3, c4, c5, c6, c7, c8);
-	i++;
-};
 
-shuffle(cardholder);
+function makecardsarray() {
+	let i = 0;
+	while (i < 2) {
+		cardholder.push(c1, c2, c3, c4, c5, c6, c7, c8);
+	i++;
+	};
+	shuffle(cardholder);
+	return cardholder;
+}
+
+function makedeck(array) {
+	const fragment = document.createDocumentFragment();
+	const deck = document.querySelector('.deck');
+	while (deck.firstChild) {
+    deck.removeChild(deck.firstChild);
+	};
+	for ( let value of array) {
+		const listel = document.createElement('li');
+		listel.classList.add('card');
+		listel.innerHTML = value;
+		fragment.appendChild(listel);
+	};
+	deck.appendChild(fragment);
+}
+makecardsarray();
+makedeck(cardholder);
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
