@@ -10,10 +10,11 @@ const c5 = "<i class='fa fa-bicycle'></i>";
 const c6 = "<i class='fa fa-bomb'></i>";
 const c7 = "<i class='fa fa-leaf'></i>";
 const c8 = "<i class='fa fa-cube'></i>";
-let cardholder = [];
 
-function makecardsarray() {
+
+function makeCardsArray() {
 	let i = 0;
+	let cardholder = [];
 	while (i < 2) {
 		cardholder.push(c1, c2, c3, c4, c5, c6, c7, c8);
 	i++;
@@ -22,9 +23,9 @@ function makecardsarray() {
 	return cardholder;
 }
 
-function makedeck(array) {
+function makeDeck(array) {
 	const fragment = document.createDocumentFragment();
-	const deck = document.querySelector('.deck');
+	let deck = document.querySelector('.deck');
 	while (deck.firstChild) {
     deck.removeChild(deck.firstChild);
 	};
@@ -36,8 +37,9 @@ function makedeck(array) {
 	};
 	deck.appendChild(fragment);
 }
-makecardsarray();
-makedeck(cardholder);
+
+makeDeck(makeCardsArray());
+addClicks();
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
@@ -73,15 +75,23 @@ function shuffle(array) {
  */
 
 
-// Display tha card's symbol
+// display the card's symbol
 function showCard (event) {
 	event.preventDefault();
 	event.target.classList.toggle('open');
 	event.target.classList.toggle('show');
 	event.target.removeEventListener('click', showCard);
 }
-//add 'click' Event Listener to the cards
+// add 'click' event listener to the cards
+function addClicks () {
 let cards = document.querySelectorAll('.card');
 for (let i = 0; i < cards.length; i++) {
 	cards[i].addEventListener('click', showCard);
 };
+}
+
+const restartBtn = document.querySelector('.restart');
+restartBtn.addEventListener('click', function () {
+	makeDeck(makeCardsArray());
+	addClicks();
+});
