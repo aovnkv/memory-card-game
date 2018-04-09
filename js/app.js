@@ -11,11 +11,12 @@ const c6 = "<i class='fa fa-bomb'></i>";
 const c7 = "<i class='fa fa-leaf'></i>";
 const c8 = "<i class='fa fa-cube'></i>";
 const restartBtn = document.querySelector('.restart');
-let cards = document.querySelectorAll('.card');
 let count = 0;
+let oclArr = [];
+let prevCard;
 
 makeDeck(makeCardsArray());
-addClicks();
+addClickListeners();
 
 /*
  * Display the cards on the page
@@ -84,14 +85,23 @@ function showCard (event) {
 	event.target.classList.toggle('show');
 	event.target.removeEventListener('click', showCard);
 	addtoOpenCardList(event.target);
-	clicksCount(event.target);
+	clicksCount();
+	if (count % 2 === 0) {
+		if (!cardsMatch(event)) {
+			oclArr.pop();
+			oclArr.pop();
+		}
+	} else {
+		prevCard = event.target;
+	}
 }
 
 // add 'click' event listener to the cards
-function addClicks () {
-for (let i = 0; i < cards.length; i++) {
-	cards[i].addEventListener('click', showCard);
-};
+function addClickListeners () {
+	let cards = document.querySelectorAll('.card');
+	for (let i = 0; i < cards.length; i++) {
+		cards[i].addEventListener('click', showCard);
+	};
 }
 // rebuilding the deck with new cards after clicking restart
 restartBtn.addEventListener('click', function () {
@@ -100,13 +110,27 @@ restartBtn.addEventListener('click', function () {
 });
 
 function addtoOpenCardList (card) {
-	let oclArr = [];
 	oclArr.push(card.firstElementChild);
 }
 
-function clicksCount (card) {
+function clicksCount () {
 	count += 1;
 	return count;
 }
 
+function cardsMatch (event) {
+	if (!(event.target.innerHTML === prevCard.innerHTML)) {
+		prevCard.classList.toggle('show');
+		event.target.classList.toggle('show');
+		prevCard.classList.toggle('open');
+		event.target.classList.toggle('open');
+		prevCard.classList.toggle('close');
+		event.target.classList.toggle('close');
+		prevCard.addEventListener('click', showCard);
+		event.target.addEventListener('click', showCard);
+		prevCard = "";
+		return false;
+	};
+	return true;
+}
 
