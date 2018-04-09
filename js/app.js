@@ -106,7 +106,7 @@ function addClickListeners () {
 // rebuilding the deck with new cards after clicking restart
 restartBtn.addEventListener('click', function () {
 	makeDeck(makeCardsArray());
-	addClicks();
+	addClickListeners();
 });
 
 function addtoOpenCardList (card) {
@@ -115,6 +115,7 @@ function addtoOpenCardList (card) {
 
 function clicksCount () {
 	count += 1;
+	document.querySelector('.moves').innerHTML = count;
 	return count;
 }
 
@@ -133,4 +134,5 @@ function cardsMatch (event) {
 	};
 	return true;
 }
+
 
