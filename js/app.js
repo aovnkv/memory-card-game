@@ -10,36 +10,13 @@ const c5 = "<i class='fa fa-bicycle'></i>";
 const c6 = "<i class='fa fa-bomb'></i>";
 const c7 = "<i class='fa fa-leaf'></i>";
 const c8 = "<i class='fa fa-cube'></i>";
-
-
-function makeCardsArray() {
-	let i = 0;
-	let cardholder = [];
-	while (i < 2) {
-		cardholder.push(c1, c2, c3, c4, c5, c6, c7, c8);
-	i++;
-	};
-	shuffle(cardholder);
-	return cardholder;
-}
-
-function makeDeck(array) {
-	const fragment = document.createDocumentFragment();
-	let deck = document.querySelector('.deck');
-	while (deck.firstChild) {
-    deck.removeChild(deck.firstChild);
-	};
-	for ( let value of array) {
-		const listel = document.createElement('li');
-		listel.classList.add('card');
-		listel.innerHTML = value;
-		fragment.appendChild(listel);
-	};
-	deck.appendChild(fragment);
-}
+const restartBtn = document.querySelector('.restart');
+let cards = document.querySelectorAll('.card');
+let count = 0;
 
 makeDeck(makeCardsArray());
 addClicks();
+
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
@@ -74,6 +51,31 @@ function shuffle(array) {
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 
+function makeCardsArray() {
+	let i = 0;
+	let cardholder = [];
+	while (i < 2) {
+		cardholder.push(c1, c2, c3, c4, c5, c6, c7, c8);
+	i++;
+	};
+	shuffle(cardholder);
+	return cardholder;
+}
+
+function makeDeck(array) {
+	const fragment = document.createDocumentFragment();
+	let deck = document.querySelector('.deck');
+	while (deck.firstChild) {
+    deck.removeChild(deck.firstChild);
+	};
+	for ( let value of array) {
+		const listel = document.createElement('li');
+		listel.classList.add('card');
+		listel.innerHTML = value;
+		fragment.appendChild(listel);
+	};
+	deck.appendChild(fragment);
+}
 
 // display the card's symbol
 function showCard (event) {
@@ -87,13 +89,11 @@ function showCard (event) {
 
 // add 'click' event listener to the cards
 function addClicks () {
-let cards = document.querySelectorAll('.card');
 for (let i = 0; i < cards.length; i++) {
 	cards[i].addEventListener('click', showCard);
 };
 }
 // rebuilding the deck with new cards after clicking restart
-const restartBtn = document.querySelector('.restart');
 restartBtn.addEventListener('click', function () {
 	makeDeck(makeCardsArray());
 	addClicks();
@@ -105,7 +105,6 @@ function addtoOpenCardList (card) {
 }
 
 function clicksCount (card) {
-	let count = 0;
 	count += 1;
 	return count;
 }
