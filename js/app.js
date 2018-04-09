@@ -81,7 +81,10 @@ function showCard (event) {
 	event.target.classList.toggle('open');
 	event.target.classList.toggle('show');
 	event.target.removeEventListener('click', showCard);
+	addtoOpenCardList(event.target);
+	clicksCount(event.target);
 }
+
 // add 'click' event listener to the cards
 function addClicks () {
 let cards = document.querySelectorAll('.card');
@@ -89,9 +92,22 @@ for (let i = 0; i < cards.length; i++) {
 	cards[i].addEventListener('click', showCard);
 };
 }
-
+// rebuilding the deck with new cards after clicking restart
 const restartBtn = document.querySelector('.restart');
 restartBtn.addEventListener('click', function () {
 	makeDeck(makeCardsArray());
 	addClicks();
 });
+
+function addtoOpenCardList (card) {
+	let oclArr = [];
+	oclArr.push(card.firstElementChild);
+}
+
+function clicksCount (card) {
+	let count = 0;
+	count += 1;
+	return count;
+}
+
+
