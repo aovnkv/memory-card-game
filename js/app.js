@@ -94,8 +94,19 @@ function showCard (event) {
 	clicksCount();
 	if (count % 2 === 0) {
 		if (!cardsMatch(event.target)) {
-			oclArr.pop();
-			oclArr.pop();
+			setTimeout(function(){
+				prevCard.classList.toggle('show');
+				event.target.classList.toggle('show');
+				prevCard.classList.toggle('open');
+				event.target.classList.toggle('open');
+				prevCard.classList.toggle('close');
+				event.target.classList.toggle('close');
+				prevCard.addEventListener('click', showCard);
+				event.target.addEventListener('click', showCard);
+				oclArr.pop();
+				oclArr.pop();
+				prevCard = "";
+			}, 500);
 		}
 	} else {
 		prevCard = event.target;
@@ -129,18 +140,10 @@ function clicksCount () {
 
 function cardsMatch (card) {
 	if (!(card.innerHTML === prevCard.innerHTML)) {
-		prevCard.classList.toggle('show');
-		card.classList.toggle('show');
-		prevCard.classList.toggle('open');
-		card.classList.toggle('open');
-		prevCard.classList.toggle('close');
-		card.classList.toggle('close');
-		prevCard.addEventListener('click', showCard);
-		card.addEventListener('click', showCard);
-		prevCard = "";
 		return false;
-	};
+	} else {
 	return true;
+	}
 }
 
 
