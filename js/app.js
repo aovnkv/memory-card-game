@@ -113,6 +113,7 @@ function addClickListeners () {
 restartBtn.addEventListener('click', function () {
 	makeDeck(makeCardsArray());
 	addClickListeners();
+	count = 0;
 	movesBtn.innerHTML = 0;
 });
 
