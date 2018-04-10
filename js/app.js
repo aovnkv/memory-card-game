@@ -11,6 +11,7 @@ const c6 = "<i class='fa fa-bomb'></i>";
 const c7 = "<i class='fa fa-leaf'></i>";
 const c8 = "<i class='fa fa-cube'></i>";
 const restartBtn = document.querySelector('.restart');
+const movesBtn = document.querySelector('.moves');
 let count = 0;
 let oclArr = [];
 let prevCard;
@@ -71,7 +72,7 @@ function makeDeck(array) {
 	};
 	for ( let value of array) {
 		const listel = document.createElement('li');
-		listel.classList.add('card');
+		listel.classList.add('card', 'init');
 		listel.innerHTML = value;
 		fragment.appendChild(listel);
 	};
@@ -84,10 +85,15 @@ function showCard (event) {
 	event.target.classList.toggle('open');
 	event.target.classList.toggle('show');
 	event.target.removeEventListener('click', showCard);
+	if (!(event.target.classList.contains('init'))) {
+		event.target.classList.toggle('close');
+	} else {
+		event.target.classList.remove('init');
+	}
 	addtoOpenCardList(event.target);
 	clicksCount();
 	if (count % 2 === 0) {
-		if (!cardsMatch(event)) {
+		if (!cardsMatch(event.target)) {
 			oclArr.pop();
 			oclArr.pop();
 		}
@@ -107,6 +113,7 @@ function addClickListeners () {
 restartBtn.addEventListener('click', function () {
 	makeDeck(makeCardsArray());
 	addClickListeners();
+	movesBtn.innerHTML = 0;
 });
 
 function addtoOpenCardList (card) {
@@ -115,20 +122,20 @@ function addtoOpenCardList (card) {
 
 function clicksCount () {
 	count += 1;
-	document.querySelector('.moves').innerHTML = count;
+	movesBtn.innerHTML = count;
 	return count;
 }
 
-function cardsMatch (event) {
-	if (!(event.target.innerHTML === prevCard.innerHTML)) {
+function cardsMatch (card) {
+	if (!(card.innerHTML === prevCard.innerHTML)) {
 		prevCard.classList.toggle('show');
-		event.target.classList.toggle('show');
+		card.classList.toggle('show');
 		prevCard.classList.toggle('open');
-		event.target.classList.toggle('open');
+		card.classList.toggle('open');
 		prevCard.classList.toggle('close');
-		event.target.classList.toggle('close');
+		card.classList.toggle('close');
 		prevCard.addEventListener('click', showCard);
-		event.target.addEventListener('click', showCard);
+		card.addEventListener('click', showCard);
 		prevCard = "";
 		return false;
 	};
