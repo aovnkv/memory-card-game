@@ -13,6 +13,7 @@ const c8 = "<i class='fa fa-cube'></i>";
 const restartBtn = document.querySelector('.restart');
 const movesBtn = document.querySelector('.moves');
 let count = 0;
+let click = 0;
 let oclArr = [];
 let prevCard;
 
@@ -81,6 +82,14 @@ function makeDeck(array) {
 
 // display the card's symbol
 function showCard (event) {
+	click += 1;
+	 if (click >= 2) {
+		blockClicks();
+		setTimeout(allowClicks, 500);
+		click = 0;
+	 } else {
+		allowClicks();
+	 }
 	event.preventDefault();
 	event.target.classList.toggle('open');
 	event.target.classList.toggle('show');
@@ -146,5 +155,16 @@ function cardsMatch (card) {
 	return true;
 	}
 }
-
+function blockClicks () {
+	let cards = document.querySelectorAll('.card');
+	for (let i = 0; i < cards.length; i++) {
+		cards[i].classList.add('noclicks');
+	};
+}
+function allowClicks () {
+	let cards = document.querySelectorAll('.card');
+	for (let i = 0; i < cards.length; i++) {
+		cards[i].classList.remove('noclicks');
+	};
+}
 
