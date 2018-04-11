@@ -12,7 +12,6 @@ const c7 = "<i class='fa fa-leaf'></i>";
 const c8 = "<i class='fa fa-cube'></i>";
 const restartBtn = document.querySelector('.restart');
 const movesBtn = document.querySelector('.moves');
-const stars = document.querySelectorAll('.stars li i');
 let count = 0;
 let click = 0;
 let oclArr = [];
@@ -144,6 +143,7 @@ function addClickListeners () {
 restartBtn.addEventListener('click', function () {
 	makeDeck(makeCardsArray());
 	addClickListeners();
+	resetStars();
 	oclArr = [];
 	count = 0;
 	movesBtn.innerHTML = 0;
@@ -182,6 +182,7 @@ function allowClicks () {
 }
 
 function starRating () {
+	let stars = document.querySelectorAll('.stars li i');
 	if (count === 24) {
 		stars[2].classList.remove('fas', 'fa-star');
 		stars[2].classList.add('far', 'fa-star');
@@ -194,6 +195,11 @@ function starRating () {
 		stars[0].classList.remove('fas', 'fa-star');
 		stars[0].classList.add('far', 'fa-star');
 	}
+}
+
+function resetStars () {
+	let sts = document.querySelector('.stars');
+	sts.innerHTML = '<li><i class="fas fa-star"></i></li><li><i class="fas fa-star"></i></li><li><i class="fas fa-star"></i></li>';
 }
 
 // function startTimer () {	
