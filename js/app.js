@@ -82,7 +82,7 @@ function makeDeck(array) {
 	deck.appendChild(fragment);
 }
 
-// display the card's symbol
+// display the card's symbol and other actions
 function showCard (event) {
 	click += 1;
 	 if (click >= 2) {
@@ -102,8 +102,16 @@ function showCard (event) {
 		event.target.classList.remove('init');
 	}
 	addtoOpenCardList(event.target);
+	if (oclArr.length === 16) {
+		$("#win-window").modal({
+			fadeDuration: 300
+		});
+	}
 	clicksCount();
 	starRating();
+	// if (count === 1) {
+	//   startTimer();
+	// }
 	if (count % 2 === 0) {
 		if (!cardsMatch(event.target)) {
 			setTimeout(function(){
@@ -158,12 +166,14 @@ function cardsMatch (card) {
 	return true;
 	}
 }
+
 function blockClicks () {
 	let cards = document.querySelectorAll('.card');
 	for (let i = 0; i < cards.length; i++) {
 		cards[i].classList.add('noclicks');
 	};
 }
+
 function allowClicks () {
 	let cards = document.querySelectorAll('.card');
 	for (let i = 0; i < cards.length; i++) {
@@ -186,3 +196,10 @@ function starRating () {
 	}
 }
 
+// function startTimer () {	
+// 	let startTime = Date.now();
+// 	let intvl = setInterval(function () {
+// 		let elapsedTime = Date.now() - startTime;
+// 		document.querySelector(".timer").innerHTML = (elapsedTime / 1000).toFixed(3);
+// 	}, 100);
+// }	
