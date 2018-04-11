@@ -2,16 +2,17 @@
  * Create a list that holds all of your cards
  */
 "use strict";
-const c1 = "<i class='fa fa-paper-plane-o'></i>";
+const c1 = "<i class='far fa-paper-plane'></i>";
 const c2 = "<i class='fa fa-anchor'></i>";
 const c3 = "<i class='fa fa-bolt'></i>";
-const c4 = "<i class='fa fa-diamond'></i>";
+const c4 = "<i class='far fa-gem'></i>";
 const c5 = "<i class='fa fa-bicycle'></i>";
 const c6 = "<i class='fa fa-bomb'></i>";
 const c7 = "<i class='fa fa-leaf'></i>";
 const c8 = "<i class='fa fa-cube'></i>";
 const restartBtn = document.querySelector('.restart');
 const movesBtn = document.querySelector('.moves');
+const stars = document.querySelectorAll('.stars li i');
 let count = 0;
 let click = 0;
 let oclArr = [];
@@ -19,6 +20,7 @@ let prevCard;
 
 makeDeck(makeCardsArray());
 addClickListeners();
+starRating();
 
 /*
  * Display the cards on the page
@@ -101,6 +103,7 @@ function showCard (event) {
 	}
 	addtoOpenCardList(event.target);
 	clicksCount();
+	starRating();
 	if (count % 2 === 0) {
 		if (!cardsMatch(event.target)) {
 			setTimeout(function(){
@@ -166,5 +169,20 @@ function allowClicks () {
 	for (let i = 0; i < cards.length; i++) {
 		cards[i].classList.remove('noclicks');
 	};
+}
+
+function starRating () {
+	if (count === 24) {
+		stars[2].classList.remove('fas', 'fa-star');
+		stars[2].classList.add('far', 'fa-star');
+	}
+	else if (count === 30) {
+		stars[1].classList.remove('fas', 'fa-star');
+		stars[1].classList.add('far', 'fa-star');
+	}
+	else if (count === 36) {
+		stars[0].classList.remove('fas', 'fa-star');
+		stars[0].classList.add('far', 'fa-star');
+	}
 }
 
