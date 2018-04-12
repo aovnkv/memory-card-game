@@ -16,7 +16,7 @@ let count = 0;
 let click = 0;
 let oclArr = [];
 let prevCard;
-
+let intervalID = setInterval(startTimer, 100);
 makeDeck(makeCardsArray());
 addClickListeners();
 starRating();
@@ -86,7 +86,7 @@ function showCard (event) {
 	click += 1;
 	 if (click >= 2) {
 		blockClicks();
-		setTimeout(allowClicks, 500);
+		setTimeout(allowClicks, 400);
 		click = 0;
 	 } else {
 		allowClicks();
@@ -102,15 +102,17 @@ function showCard (event) {
 	}
 	addtoOpenCardList(event.target);
 	if (oclArr.length === 16) {
+		stopTimer();
 		$("#win-window").modal({
 			fadeDuration: 300
 		});
 	}
 	clicksCount();
 	starRating();
-	// if (count === 1) {
-	//   startTimer();
-	// }
+	if (count === 1) {
+		let startTime = Date.now();
+	   	startTimer(startTime);
+	}
 	if (count % 2 === 0) {
 		if (!cardsMatch(event.target)) {
 			setTimeout(function(){
@@ -125,7 +127,7 @@ function showCard (event) {
 				oclArr.pop();
 				oclArr.pop();
 				prevCard = "";
-			}, 500);
+			}, 400);
 		}
 	} else {
 		prevCard = event.target;
@@ -202,10 +204,12 @@ function resetStars () {
 	sts.innerHTML = '<li><i class="fas fa-star"></i></li><li><i class="fas fa-star"></i></li><li><i class="fas fa-star"></i></li>';
 }
 
-// function startTimer () {	
-// 	let startTime = Date.now();
-// 	let intvl = setInterval(function () {
-// 		let elapsedTime = Date.now() - startTime;
-// 		document.querySelector(".timer").innerHTML = (elapsedTime / 1000).toFixed(3);
-// 	}, 100);
-// }	
+function startTimer (time) {	
+	let elapsedTime = Date.now() - time;
+	document.querySelector(".timer").innerHTML = (elapsedTime / 1000).toFixed(3);
+}
+
+function stopTimer () {
+	clearInterval(intervalID);
+}
+	
