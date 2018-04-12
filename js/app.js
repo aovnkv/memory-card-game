@@ -16,7 +16,8 @@ let count = 0;
 let click = 0;
 let oclArr = [];
 let prevCard;
-let intervalID = setInterval(startTimer, 100);
+let intervalID;
+let timerelement = document.querySelector(".timer");
 makeDeck(makeCardsArray());
 addClickListeners();
 starRating();
@@ -111,7 +112,11 @@ function showCard (event) {
 	starRating();
 	if (count === 1) {
 		let startTime = Date.now();
-	   	startTimer(startTime);
+		intervalID = setInterval(function () {
+			let elapsedTime = Date.now() - startTime;;
+			timerelement.innerHTML = (elapsedTime / 1000).toFixed(3);
+		}, 100);
+		prevCard = event.target;
 	}
 	if (count % 2 === 0) {
 		if (!cardsMatch(event.target)) {
@@ -146,6 +151,8 @@ restartBtn.addEventListener('click', function () {
 	makeDeck(makeCardsArray());
 	addClickListeners();
 	resetStars();
+	stopTimer();
+	timerelement.innerHTML = 0;
 	oclArr = [];
 	count = 0;
 	movesBtn.innerHTML = 0;
@@ -204,12 +211,11 @@ function resetStars () {
 	sts.innerHTML = '<li><i class="fas fa-star"></i></li><li><i class="fas fa-star"></i></li><li><i class="fas fa-star"></i></li>';
 }
 
-function startTimer (time) {	
-	let elapsedTime = Date.now() - time;
-	document.querySelector(".timer").innerHTML = (elapsedTime / 1000).toFixed(3);
-}
+// function startTimer() {
+// 	let elapsedTime = Date.now() - startTime;;
+// 	document.querySelector(".timer").innerHTML = (elapsedTime / 1000).toFixed(3);
+// }
 
 function stopTimer () {
 	clearInterval(intervalID);
 }
-	
