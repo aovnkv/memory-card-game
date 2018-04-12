@@ -111,8 +111,7 @@ function showCard (event) {
 	clicksCount();
 	starRating();
 	if (count === 1) {
-		let startTime = Date.now();
-		intervalID = setInterval(startTimer(), 100);
+		startTimer();
 		prevCard = event.target;
 	}
 	if (count % 2 === 0) {
@@ -209,8 +208,11 @@ function resetStars () {
 }
 
  function startTimer() {
- 	let elapsedTime = Date.now() - startTime;
-	document.querySelector(".timer").innerHTML = (elapsedTime / 1000).toFixed(3);
+	let startTime = Date.now();
+	intervalID = setInterval(function() {
+		let elapsedTime = Date.now() - startTime;
+		document.querySelector(".timer").innerHTML = (elapsedTime / 1000).toFixed(3);
+	}, 100);	
 }
 
 function stopTimer () {
