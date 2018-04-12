@@ -104,9 +104,7 @@ function showCard (event) {
 	addtoOpenCardList(event.target);
 	if (oclArr.length === 16) {
 		stopTimer();
-		$("#win-window").modal({
-			fadeDuration: 300
-		});
+		winnerPopUp();
 	}
 	clicksCount();
 	starRating();
@@ -217,4 +215,16 @@ function resetStars () {
 
 function stopTimer () {
 	clearInterval(intervalID);
+}
+
+function winnerPopUp () {
+	let starshtml = document.querySelector('.stars');
+	let moveshtml = document.querySelector('.moves');
+	let timerhtml = document.querySelector('.timer');
+	document.querySelector('.m-stars').appendChild(starshtml);
+	document.querySelector('.m-moves').innerHTML = moveshtml.innerHTML;
+	document.querySelector('.m-time').innerHTML = timerhtml.innerHTML;
+	$('#win-window').modal({
+		fadeDuration: 300
+	});
 }
