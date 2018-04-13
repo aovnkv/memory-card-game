@@ -82,8 +82,28 @@ function makeDeck(array) {
 	deck.appendChild(fragment);
 }
 
+// add 'click' event listener to the cards
+function addClickListeners() {
+	let cards = document.querySelectorAll('.card');
+	for (let i = 0; i < cards.length; i++) {
+		cards[i].addEventListener('click', clickCard);
+	};
+}
+
+// rebuilding the deck with new cards after clicking restart
+restartBtn.addEventListener('click', function () {
+	makeDeck(makeCardsArray());
+	addClickListeners();
+	resetStars();
+	stopTimer();
+	timerelement.innerHTML = 0;
+	oclArr = [];
+	count = 0;
+	movesBtn.innerHTML = 0;
+});
+
 // display the card's symbol and other actions
-function showCard (event) {
+function clickCard (event) {
 	click += 1;
 	 if (click >= 2) {
 		blockClicks();
@@ -95,7 +115,7 @@ function showCard (event) {
 	event.preventDefault();
 	event.target.classList.toggle('open');
 	event.target.classList.toggle('show');
-	event.target.removeEventListener('click', showCard);
+	event.target.removeEventListener('click', clickCard);
 	addtoOpenCardList(event.target);
 	clicksCount();
 	if (oclArr.length === 16) {
@@ -108,42 +128,11 @@ function showCard (event) {
 		prevCard = event.target;
 	}
 	if (count % 2 === 0) {
-		if (!cardsMatch(event.target)) {
-			setTimeout(function(){
-				prevCard.classList.toggle('show');
-				event.target.classList.toggle('show');
-				prevCard.classList.toggle('open');
-				event.target.classList.toggle('open');
-				prevCard.addEventListener('click', showCard);
-				event.target.addEventListener('click', showCard);
-				oclArr.pop();
-				oclArr.pop();
-				prevCard = "";
-			}, 400);
-		}
+		cardsMatch(event);
 	} else {
 		prevCard = event.target;
 	}
 }
-
-// add 'click' event listener to the cards
-function addClickListeners () {
-	let cards = document.querySelectorAll('.card');
-	for (let i = 0; i < cards.length; i++) {
-		cards[i].addEventListener('click', showCard);
-	};
-}
-// rebuilding the deck with new cards after clicking restart
-restartBtn.addEventListener('click', function () {
-	makeDeck(makeCardsArray());
-	addClickListeners();
-	resetStars();
-	stopTimer();
-	timerelement.innerHTML = 0;
-	oclArr = [];
-	count = 0;
-	movesBtn.innerHTML = 0;
-});
 
 function addtoOpenCardList (card) {
 	oclArr.push(card.firstElementChild);
@@ -163,11 +152,19 @@ function clicksCount () {
 	return count;
 }
 
-function cardsMatch (card) {
-	if (!(card.innerHTML === prevCard.innerHTML)) {
-		return false;
-	} else {
-	return true;
+function cardsMatch (event) {
+	if (!(event.target.innerHTML === prevCard.innerHTML)) {
+		setTimeout(function () {
+			prevCard.classList.toggle('show');
+			event.target.classList.toggle('show');
+			prevCard.classList.toggle('open');
+			event.target.classList.toggle('open');
+			prevCard.addEventListener('click', clickCard);
+			event.target.addEventListener('click', clickCard);
+			oclArr.pop();
+			oclArr.pop();
+			return prevCard = "";
+		}, 400);
 	}
 }
 
@@ -211,7 +208,7 @@ function resetStars () {
 	let startTime = Date.now();
 	intervalID = setInterval(function() {
 		let elapsedTime = Date.now() - startTime;
-		document.querySelector(".timer").innerHTML = (elapsedTime / 1000).toFixed(3);
+		document.querySelector(".timer").innerHTML = (elapsedTime / 1000).toFixed(1);
 	}, 100);	
 }
 
