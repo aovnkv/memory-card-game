@@ -75,7 +75,7 @@ function makeDeck(array) {
 	};
 	for ( let value of array) {
 		const listel = document.createElement('li');
-		listel.classList.add('card', 'init');
+		listel.classList.add('card');
 		listel.innerHTML = value;
 		fragment.appendChild(listel);
 	};
@@ -96,17 +96,12 @@ function showCard (event) {
 	event.target.classList.toggle('open');
 	event.target.classList.toggle('show');
 	event.target.removeEventListener('click', showCard);
-	if (!(event.target.classList.contains('init'))) {
-		event.target.classList.toggle('close');
-	} else {
-		event.target.classList.remove('init');
-	}
 	addtoOpenCardList(event.target);
+	clicksCount();
 	if (oclArr.length === 16) {
 		stopTimer();
 		winnerPopUp();
 	}
-	clicksCount();
 	starRating();
 	if (count === 1) {
 		startTimer();
@@ -119,8 +114,6 @@ function showCard (event) {
 				event.target.classList.toggle('show');
 				prevCard.classList.toggle('open');
 				event.target.classList.toggle('open');
-				prevCard.classList.toggle('close');
-				event.target.classList.toggle('close');
 				prevCard.addEventListener('click', showCard);
 				event.target.addEventListener('click', showCard);
 				oclArr.pop();
@@ -156,9 +149,17 @@ function addtoOpenCardList (card) {
 	oclArr.push(card.firstElementChild);
 }
 
+function moves(count) {
+	if (count % 2 === 0) {
+		return count / 2;
+	} else {
+		return count / 2 - 0.5;
+	}
+}
+
 function clicksCount () {
 	count += 1;
-	movesBtn.innerHTML = count;
+	movesBtn.innerHTML = moves(count);
 	return count;
 }
 
