@@ -90,7 +90,7 @@ function addClickListeners() {
 	};
 }
 
-// rebuilding the deck with new cards after clicking restart
+// rebuilding the deck with new cards when clicking restart
 restartBtn.addEventListener('click', function () {
 	makeDeck(makeCardsArray());
 	addClickListeners();
@@ -104,6 +104,7 @@ restartBtn.addEventListener('click', function () {
 
 // display the card's symbol and other actions
 function clickCard (event) {
+	//block clicks on the deck to prevent three or more cards show simultaneously
 	click += 1;
 	 if (click >= 2) {
 		blockClicks();
@@ -118,11 +119,11 @@ function clickCard (event) {
 	event.target.removeEventListener('click', clickCard);
 	addtoOpenCardList(event.target);
 	clicksCount();
+	starRating();
 	if (oclArr.length === 16) {
 		stopTimer();
 		winnerPopUp();
 	}
-	starRating();
 	if (count === 1) {
 		startTimer();
 		prevCard = event.target;
@@ -165,6 +166,9 @@ function cardsMatch (event) {
 			oclArr.pop();
 			return prevCard = "";
 		}, 400);
+	} else {
+		prevCard.classList.add('match');
+		event.target.classList.add('match');
 	}
 }
 
