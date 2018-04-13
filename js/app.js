@@ -202,7 +202,8 @@ function starRating () {
 
 function resetStars () {
 	let sts = document.querySelector('.stars');
-	sts.innerHTML = '<li><i class="fas fa-star"></i></li><li><i class="fas fa-star"></i></li><li><i class="fas fa-star"></i></li>';
+	let li = '<li><i class="fas fa-star"></i></li>'
+	sts.innerHTML = `${li}${li}${li}`;
 }
 
  function startTimer() {

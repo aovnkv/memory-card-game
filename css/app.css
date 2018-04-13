@@ -86,7 +86,8 @@ h1 {
  */
 
 .score-panel {
-    text-align: left;
+    display: flex;
+    justify-content: space-between;
     width: 345px;
     margin-bottom: 10px;
 }
@@ -113,6 +114,103 @@ h1 {
 .noclicks {
     pointer-events: none;
 }
-.timer {
-    margin-left: 30px; 
+
+#win-window.modal {
+   text-align: center; 
+}
+
+@media screen and (max-width: 720px) {
+
+    .container {
+        height: 100%;
+    }
+    .deck {
+        width: 80%;
+        height: 544px;
+        min-height: auto;
+        padding: 1em;
+    }
+
+    .deck .card {
+        width: 21%;
+        height: 21%;
+    }
+
+    .score-panel {
+        width: 48%;
+        max-width: 345px;
+    }
+
+    .deck .card.show {
+        font-size: 24px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .container {
+        height: 100%;
+    }
+    .deck {
+        width: 80%;
+        height: 450px;
+        min-height: auto;
+        padding: 0.8em;
+    }
+    .deck .card {
+        width: 21%;
+        height: 21%;
+    }
+    .score-panel {
+        width: 60%;
+        max-width: 345px;
+    }
+    .deck .card.show {
+        font-size: 20px;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .container {
+        height: 100%;
+    }
+    .deck {
+        width: 80%;
+        height: 360px;
+        min-height: auto;
+        padding: 0.7em;
+    }
+    .deck .card {
+        width: 21%;
+        height: 21%;
+    }
+    .score-panel {
+        width: 70%;
+        max-width: 345px;
+    }
+    .deck .card.show {
+        font-size: 18px;
+    }
+}
+
+@media screen and (max-width: 420px) {
+    .container {
+        height: 100%;
+    }
+    .deck {
+        width: 80%;
+        height: 285px;
+        min-height: auto;
+        padding: 0.6em;
+    }
+    .deck .card {
+        width: 21%;
+        height: 21%;
+    }
+    .score-panel {
+        width: 75%;
+        max-width: 345px;
+    }
+    .deck .card.show {
+        font-size: 18px;
+    }
 }
