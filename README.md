@@ -1,6 +1,6 @@
 # Memory Game Project
 This is my project of a webapp memory game for Google Frontend Udacity Nanodegree Scholarship 2017/2018.  
-To play: [click here](https://clitorrent.github.io/memory-card-game/)  
+To play: [click here](https://clitorrent.github.io/memory-card-game/)   
 Enjoy!
 
 ## Table of Contents
