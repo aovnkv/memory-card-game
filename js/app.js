@@ -156,8 +156,16 @@ function cardsMatch (event) {
 			event.target.classList.add('no-matched');
 		}, 100)
 	} else {
-		prevCard.classList.add('match');
-		event.target.classList.add('match');
+		setTimeout(() => {
+			prevCard.classList.remove('matched');
+			event.target.classList.remove('matched');
+			prevCard.classList.add('match');
+			event.target.classList.add('match');
+		}, 400);
+		setTimeout(() => {
+			prevCard.classList.add('matched');
+			event.target.classList.add('matched');
+		}, 100);
 	}
 }
 
@@ -177,24 +185,26 @@ function allowClicks () {
 
 function starRating () {
 	let stars = document.querySelectorAll('.stars li i');
-	if (count === 24) {
+	if (count === 26) {
 		stars[2].classList.remove('fas', 'fa-star');
 		stars[2].classList.add('far', 'fa-star');
 	}
-	else if (count === 30) {
+	else if (count === 32) {
 		stars[1].classList.remove('fas', 'fa-star');
 		stars[1].classList.add('far', 'fa-star');
 	}
-	else if (count === 36) {
+	else if (count === 38) {
 		stars[0].classList.remove('fas', 'fa-star');
 		stars[0].classList.add('far', 'fa-star');
 	}
 }
 
 function resetStars () {
-	let sts = document.querySelector('.stars');
+	let sts = document.createElement('ul');
+	sts.classList.add('stars');
 	let li = '<li><i class="fas fa-star"></i></li>'
-	sts.innerHTML = `${li}${li}${li}`;
+	sts.innerHTML = `${li} ${li} ${li}`;
+	document.querySelector('.score-panel').appendChild(sts);
 }
 
  function startTimer() {
@@ -213,7 +223,7 @@ function winnerPopUp () {
 	let starshtml = document.querySelector('.stars');
 	let moveshtml = document.querySelector('.moves');
 	let timerhtml = document.querySelector('.timer');
-	document.querySelector('.m-stars').appendChild(starshtml);
+	document.getElementById('m-stars').appendChild(starshtml);
 	document.querySelector('.m-moves').innerHTML = moveshtml.innerHTML;
 	document.querySelector('.m-time').innerHTML = timerhtml.innerHTML;
 	$('#win-window').modal({

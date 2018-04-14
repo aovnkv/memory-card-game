@@ -68,6 +68,21 @@ h1 {
         transform: translate(1px, -2px) rotate(-1deg);
     }
 }
+
+@keyframes scale-it {
+    0% {
+        transform: scale(1.1);
+    }
+    25% {
+        transform: scale(1.2);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
 /*
  * Styles for the deck of cards
  */
@@ -154,6 +169,11 @@ h1 {
 
 .no-matched {
     animation: shake 0.4s;
+    animation-iteration-count: 0.4s;
+}
+
+.matched {
+    animation: scale-it 0.4s;
     animation-iteration-count: 0.4s;
 }
 
