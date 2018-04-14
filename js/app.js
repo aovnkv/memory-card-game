@@ -1,7 +1,5 @@
-/*
- * Create a list that holds all of your cards
- */
 "use strict";
+// consts to store card symbols and score panel elements
 const c1 = "<i class='far fa-paper-plane'></i>";
 const c2 = "<i class='fa fa-anchor'></i>";
 const c3 = "<i class='fa fa-bolt'></i>";
@@ -12,17 +10,24 @@ const c7 = "<i class='fa fa-leaf'></i>";
 const c8 = "<i class='fa fa-cube'></i>";
 const restartBtn = document.querySelector('.restart');
 const movesBtn = document.querySelector('.moves');
+const timerelement = document.querySelector(".timer");
+// count is for amount of clicks from the start of the game
 let count = 0;
+// click is for constrain more than two consequent clicks on the deck
 let click = 0;
+//oclArr is for open card list array
 let oclArr = [];
+//prevCard is for storing 1st clicked card within two clicked cards
 let prevCard;
+//intervalID is needed to clear timer later after finishing or restarting a game
 let intervalID;
-let timerelement = document.querySelector(".timer");
+
+//game page init on load
 makeDeck(makeCardsArray());
 addClickListeners();
 starRating();
 
-// Shuffle function from http://stackoverflow.com/a/2450976
+// shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
 
@@ -36,7 +41,7 @@ function shuffle(array) {
 
     return array;
 }
-
+// create a list that holds all of your cards
 function makeCardsArray() {
 	let i = 0;
 	let cardholder = [];
@@ -47,7 +52,7 @@ function makeCardsArray() {
 	shuffle(cardholder);
 	return cardholder;
 }
-
+// add html with cards to the page
 function makeDeck(array) {
 	const fragment = document.createDocumentFragment();
 	let deck = document.querySelector('.deck');
@@ -87,7 +92,7 @@ restartBtn.addEventListener('click', () => {
 
 // display the card's symbol and other actions
 function clickCard (event) {
-	//block clicks on the deck to prevent three or more cards show simultaneously
+	//block cards clicks on the deck to prevent three or more cards show simultaneously
 	click += 1;
 	 if (click >= 2) {
 		blockClicks();
@@ -99,29 +104,33 @@ function clickCard (event) {
 	event.preventDefault();
 	event.target.classList.toggle('open');
 	event.target.classList.toggle('show');
+	// block card to handle more than one click
 	event.target.removeEventListener('click', clickCard);
 	addtoOpenCardList(event.target);
 	clicksCount();
 	starRating();
+	// fires a winner modal window if all the cards are matched
 	if (oclArr.length === 16) {
 		stopTimer();
 		winnerPopUp();
 	}
+	// stars timer after first click in a game
 	if (count === 1) {
 		startTimer();
 		prevCard = event.target;
 	}
+	// check if cards match after every second card click on the deck
 	if (count % 2 === 0) {
 		cardsMatch(event);
 	} else {
 		prevCard = event.target;
 	}
 }
-
+// add cards to open cards list array
 function addtoOpenCardList (card) {
 	oclArr.push(card.firstElementChild);
 }
-
+// add moves count to the score panel
 function moves(count) {
 	if (count % 2 === 0) {
 		return count / 2;
@@ -129,13 +138,13 @@ function moves(count) {
 		return count / 2 - 0.5;
 	}
 }
-
+// add overall clicks count and output them in the score panel
 function clicksCount () {
 	count += 1;
 	movesBtn.innerHTML = moves(count);
 	return count;
 }
-
+// function to handle if cards match condition and add animation if they match or not
 function cardsMatch (event) {
 	if (!(event.target.innerHTML === prevCard.innerHTML)) {
 		setTimeout(() => {
@@ -168,21 +177,21 @@ function cardsMatch (event) {
 		}, 100);
 	}
 }
-
+// function to block all the cards clicks on the deck 
 function blockClicks () {
 	let cards = document.querySelectorAll('.card');
 	for (let i = 0; i < cards.length; i++) {
 		cards[i].classList.add('noclicks');
 	};
 }
-
+// function to allow all the card clicks on the deck
 function allowClicks () {
 	let cards = document.querySelectorAll('.card');
 	for (let i = 0; i < cards.length; i++) {
 		cards[i].classList.remove('noclicks');
 	};
 }
-
+// star rating condition handle
 function starRating () {
 	let stars = document.querySelectorAll('.stars li i');
 	if (count === 26) {
@@ -198,25 +207,25 @@ function starRating () {
 		stars[0].classList.add('far', 'fa-star');
 	}
 }
-
+// reset star rating on the score panel
 function resetStars () {
 	let sts = document.querySelector('.stars')
 	let li = '<li><i class="fas fa-star"></i></li>'
 	sts.innerHTML = `${li} ${li} ${li}`;
 }
-
- function startTimer() {
+// timer to output on the score panel
+function startTimer() {
 	let startTime = Date.now();
 	intervalID = setInterval(function() {
 		let elapsedTime = Date.now() - startTime;
 		document.querySelector(".timer").innerHTML = (elapsedTime / 1000).toFixed(1);
 	}, 100);	
 }
-
+// stop timer function
 function stopTimer () {
 	clearInterval(intervalID);
 }
-
+// function to show winner modal popup window
 function winnerPopUp () {
 	let starshtml = document.querySelector('.stars').innerHTML;
 	let moveshtml = document.querySelector('.moves');
