@@ -200,11 +200,9 @@ function starRating () {
 }
 
 function resetStars () {
-	let sts = document.createElement('ul');
-	sts.classList.add('stars');
+	let sts = document.querySelector('.stars')
 	let li = '<li><i class="fas fa-star"></i></li>'
 	sts.innerHTML = `${li} ${li} ${li}`;
-	document.querySelector('.score-panel').appendChild(sts);
 }
 
  function startTimer() {
@@ -220,10 +218,10 @@ function stopTimer () {
 }
 
 function winnerPopUp () {
-	let starshtml = document.querySelector('.stars');
+	let starshtml = document.querySelector('.stars').innerHTML;
 	let moveshtml = document.querySelector('.moves');
 	let timerhtml = document.querySelector('.timer');
-	document.getElementById('m-stars').appendChild(starshtml);
+	document.querySelector('.m-stars').innerHTML = starshtml;
 	document.querySelector('.m-moves').innerHTML = moveshtml.innerHTML;
 	document.querySelector('.m-time').innerHTML = timerhtml.innerHTML;
 	$('#win-window').modal({
